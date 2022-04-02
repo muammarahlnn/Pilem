@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Pilem</string>
+    <string name="iv_wallpaper_desc">Wallpaper image</string>
+    <string name="btn_back_desc">Button back</string>
+    <string name="btn_favorite_desc">Button favorite</string>
+    <string name="iv_poster_desc">Poster image</string>
+    <string name="iv_rating_desc">Image rating</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
