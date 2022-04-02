@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ardnn.pilem.R
 import com.ardnn.pilem.core.data.Resource
@@ -35,6 +36,11 @@ class HomeFragment : Fragment() {
 
         if (activity != null) {
             val adapter = MoviesAdapter()
+            adapter.onItemClick = { selectedData ->
+                val toMovieDetail = HomeFragmentDirections
+                    .actionHomeFragmentToMovieDetailFragment(selectedData)
+                findNavController().navigate(toMovieDetail)
+            }
 
             val factory = ViewModelFactory.getInstance(requireActivity())
             viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
