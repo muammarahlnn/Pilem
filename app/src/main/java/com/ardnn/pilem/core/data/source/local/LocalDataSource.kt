@@ -13,6 +13,14 @@ class LocalDataSource @Inject constructor(private val pilemDao: PilemDao) {
     fun getMovies(): Flowable<List<MovieEntity>> =
         pilemDao.getMovies()
 
+    fun getFavoriteMovies(): Flowable<List<MovieEntity>> =
+        pilemDao.getFavoriteMovies()
+
     fun insertMovies(movies: List<MovieEntity>): Completable =
         pilemDao.insertMovies(movies)
+
+    fun setFavoriteMovie(movie: MovieEntity, newState: Boolean) {
+        movie.isFavorite = newState
+        pilemDao.updateFavoriteMovie(movie)
+    }
 }

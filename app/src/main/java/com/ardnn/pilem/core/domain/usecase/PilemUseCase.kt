@@ -7,4 +7,8 @@ import io.reactivex.Flowable
 interface PilemUseCase {
 
     fun getMovies(): Flowable<Resource<List<Movie>>>
+
+    fun getFavoriteMovies(): Flowable<List<Movie>>
+
+    fun setFavoriteMovie(movie: Movie, state: Boolean)
 }

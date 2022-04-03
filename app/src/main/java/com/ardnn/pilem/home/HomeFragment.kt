@@ -1,14 +1,14 @@
 package com.ardnn.pilem.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.ardnn.pilem.R
 import com.ardnn.pilem.core.data.Resource
 import com.ardnn.pilem.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +21,11 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
 
     private val binding get() = _binding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +40,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
+            // set action bar
+            (activity as AppCompatActivity).apply {
+                setSupportActionBar(binding?.toolbar?.root)
+                supportActionBar?.setDisplayShowTitleEnabled(false)
+            }
+
+            // set movies adapter
             val adapter = MoviesAdapter()
             adapter.onItemClick = { selectedData ->
                 val toMovieDetail = HomeFragmentDirections
@@ -73,4 +85,19 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_home, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_favorite -> {
+                val toFavoriteMovies = HomeFragmentDirections
+                    .actionHomeFragmentToFavoriteFragment()
+                findNavController().navigate(toFavoriteMovies)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

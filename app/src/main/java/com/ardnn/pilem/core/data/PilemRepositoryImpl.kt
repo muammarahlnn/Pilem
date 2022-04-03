@@ -44,4 +44,16 @@ class PilemRepositoryImpl @Inject constructor(
             }
         }.asFlowable()
     }
+
+    override fun getFavoriteMovies(): Flowable<List<Movie>> =
+        localDataSource.getFavoriteMovies().map {
+            DataMapper.mapEntitiesToDomain(it)
+        }
+
+    override fun setFavoriteMovie(movie: Movie, state: Boolean) {
+        val movieEntity = DataMapper.mapDomainToEntity(movie)
+        appExecutors.diskIo().execute {
+            localDataSource.setFavoriteMovie(movieEntity, state)
+        }
+    }
 }

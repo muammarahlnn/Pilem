@@ -9,6 +9,7 @@ data class Movie(
     val title: String,
     val releaseDate: String,
     val rating: Float,
+    val popularity: Float,
     val overview: String,
     val posterUrl: String,
     val wallpaperUrl: String,

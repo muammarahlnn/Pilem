@@ -28,10 +28,24 @@ object DataMapper {
                 title = it.title,
                 releaseDate = it.releaseDate,
                 rating = it.rating,
+                popularity = it.popularity,
                 overview = it.overview,
                 posterUrl = it.posterUrl,
                 wallpaperUrl = it.wallpaperUrl,
                 isFavorite = it.isFavorite,
             )
         }
+
+    fun mapDomainToEntity(input: Movie): MovieEntity =
+        MovieEntity(
+            id = input.id,
+            title = input.title,
+            releaseDate = input.releaseDate,
+            rating = input.rating,
+            popularity = input.popularity,
+            overview = input.overview,
+            posterUrl = input.posterUrl,
+            wallpaperUrl = input.wallpaperUrl,
+            isFavorite = input.isFavorite,
+        )
 }

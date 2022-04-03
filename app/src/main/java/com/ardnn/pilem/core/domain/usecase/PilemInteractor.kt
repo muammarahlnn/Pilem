@@ -12,4 +12,11 @@ class PilemInteractor @Inject constructor(
 
     override fun getMovies(): Flowable<Resource<List<Movie>>> =
         pilemRepository.getMovies()
+
+    override fun getFavoriteMovies(): Flowable<List<Movie>> =
+        pilemRepository.getFavoriteMovies()
+
+    override fun setFavoriteMovie(movie: Movie, state: Boolean) {
+        pilemRepository.setFavoriteMovie(movie, state)
+    }
 }

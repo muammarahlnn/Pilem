@@ -5,12 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.ardnn.pilem.R
 import com.ardnn.pilem.core.domain.model.Movie
 import com.ardnn.pilem.core.util.Helper
 import com.ardnn.pilem.databinding.FragmentMovieDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class MovieDetailFragment : Fragment(), View.OnClickListener {
+@AndroidEntryPoint
+class MovieDetailFragment : Fragment() {
+
+    private val viewModel: MovieDetailViewModel by viewModels()
 
     private var _binding: FragmentMovieDetailBinding? = null
 
@@ -33,33 +40,12 @@ class MovieDetailFragment : Fragment(), View.OnClickListener {
             // get movie detail and show it
             val movie = MovieDetailFragmentArgs.fromBundle(arguments as Bundle).movie
             showMovieDetail(movie)
-
-            // click listeners
-            binding?.btnBack?.setOnClickListener(this)
-            binding?.containerSynopsis?.setOnClickListener(this)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.btn_back -> requireActivity().onBackPressed()
-            R.id.container_synopsis -> {
-                isSynopsisExtended = !isSynopsisExtended
-                if (isSynopsisExtended) {
-                    binding?.tvSynopsis?.maxLines = Int.MAX_VALUE
-                    binding?.tvMore?.text = getString(R.string.less)
-                } else {
-                    binding?.tvSynopsis?.maxLines = 2
-                    binding?.tvMore?.text = getString(R.string.more)
-                }
-            }
-        }
     }
 
     private fun showMovieDetail(movie: Movie) {
@@ -81,7 +67,56 @@ class MovieDetailFragment : Fragment(), View.OnClickListener {
             tvReleaseDate.text = Helper.setTextDate(movie.releaseDate)
             tvRating.text = Helper.setTextFloat(movie.rating)
             tvSynopsis.text = Helper.setTextString(movie.overview)
+
+            // click listeners
+            // button back
+            btnBack.setOnClickListener {
+                requireActivity().onBackPressed()
+            }
+
+            // button favorite
+            var isFavorite = movie.isFavorite
+            setButtonFavorite(isFavorite)
+            btnFavorite.setOnClickListener {
+                isFavorite = !isFavorite
+                viewModel.setFavoriteMovie(movie, isFavorite)
+                setButtonFavorite(isFavorite)
+
+                if (isFavorite) {
+                    Toast.makeText(
+                        context,
+                        "${movie.title} has added to favorite movies",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        "${movie.title} has removed from favorite movies",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            // container synopsis
+            containerSynopsis.setOnClickListener {
+                isSynopsisExtended = !isSynopsisExtended
+                if (isSynopsisExtended) {
+                    binding?.tvSynopsis?.maxLines = Int.MAX_VALUE
+                    binding?.tvMore?.text = getString(R.string.less)
+                } else {
+                    binding?.tvSynopsis?.maxLines = 2
+                    binding?.tvMore?.text = getString(R.string.more)
+                }
+            }
         }
+
+    }
+
+    private fun setButtonFavorite(isFavorite: Boolean) {
+        binding?.btnFavorite?.setImageDrawable(
+            if (isFavorite) ContextCompat.getDrawable(requireActivity(), R.drawable.ic_favorite_true)
+            else ContextCompat.getDrawable(requireActivity(), R.drawable.ic_favorite_false)
+        )
     }
 
 }
