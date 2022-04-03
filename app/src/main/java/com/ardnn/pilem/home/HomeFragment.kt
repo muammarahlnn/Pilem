@@ -1,22 +1,29 @@
 package com.ardnn.pilem.home
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.ardnn.pilem.R
+import com.ardnn.pilem.MyApplication
 import com.ardnn.pilem.core.data.Resource
 import com.ardnn.pilem.core.util.ViewModelFactory
 import com.ardnn.pilem.databinding.FragmentHomeBinding
+import javax.inject.Inject
 
 class HomeFragment : Fragment() {
 
-    private lateinit var viewModel: HomeViewModel
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private val viewModel: HomeViewModel by viewModels {
+        factory
+    }
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -31,6 +38,12 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as MyApplication)
+            .appComponent.inject(this)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,9 +54,6 @@ class HomeFragment : Fragment() {
                     .actionHomeFragmentToMovieDetailFragment(selectedData)
                 findNavController().navigate(toMovieDetail)
             }
-
-            val factory = ViewModelFactory.getInstance(requireActivity())
-            viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
             viewModel.movies.observe(viewLifecycleOwner, { movies ->
                 if (movies != null) {

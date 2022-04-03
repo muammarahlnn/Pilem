@@ -73,4 +73,12 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
     implementation "androidx.room:room-rxjava2:2.4.2"
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.4.1"
+
+    // dagger
+    implementation "com.google.dagger:dagger:2.38"
+    kapt "com.google.dagger:dagger-compiler:2.38"
+
+    //by viewModels di Activity dan Fragment
+    implementation "androidx.activity:activity-ktx:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
 }

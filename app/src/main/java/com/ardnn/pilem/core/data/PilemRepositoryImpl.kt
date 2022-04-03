@@ -11,8 +11,11 @@ import com.ardnn.pilem.core.util.DataMapper
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PilemRepositoryImpl private constructor(
+@Singleton
+class PilemRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors,
@@ -40,23 +43,5 @@ class PilemRepositoryImpl private constructor(
                     .subscribe()
             }
         }.asFlowable()
-    }
-
-    companion object {
-        @Volatile
-        private var instance: PilemRepositoryImpl? = null
-
-        fun getInstance(
-            remoteDataSource: RemoteDataSource,
-            localDataSource: LocalDataSource,
-            appExecutors: AppExecutors,
-        ) : PilemRepositoryImpl =
-            instance ?: synchronized(this) {
-                instance ?: PilemRepositoryImpl(
-                    remoteDataSource,
-                    localDataSource,
-                    appExecutors
-                )
-            }
     }
 }

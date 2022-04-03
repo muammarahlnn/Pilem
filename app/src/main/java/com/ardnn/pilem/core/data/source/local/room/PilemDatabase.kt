@@ -13,23 +13,4 @@ import com.ardnn.pilem.core.data.source.local.entity.MovieEntity
 abstract class PilemDatabase : RoomDatabase() {
 
     abstract fun pilemDao(): PilemDao
-
-    companion object {
-
-        @Volatile
-        private var INSTANCE: PilemDatabase? = null
-
-        fun getInstance(context: Context): PilemDatabase =
-            INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    PilemDatabase::class.java,
-                    "Pilem.db"
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
-                INSTANCE = instance
-                instance
-            }
-    }
 }

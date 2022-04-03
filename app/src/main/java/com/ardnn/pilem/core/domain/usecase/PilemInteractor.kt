@@ -4,8 +4,9 @@ import com.ardnn.pilem.core.data.Resource
 import com.ardnn.pilem.core.domain.model.Movie
 import com.ardnn.pilem.core.domain.repository.PilemRepository
 import io.reactivex.Flowable
+import javax.inject.Inject
 
-class PilemInteractor(
+class PilemInteractor @Inject constructor(
     private val pilemRepository: PilemRepository
 ) : PilemUseCase{
 
