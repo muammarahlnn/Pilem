@@ -3,7 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
-    id "androidx.navigation.safeargs"
+    id 'androidx.navigation.safeargs'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -74,9 +75,10 @@ dependencies {
     implementation "androidx.room:room-rxjava2:2.4.2"
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.4.1"
 
-    // dagger
-    implementation "com.google.dagger:dagger:2.38"
-    kapt "com.google.dagger:dagger-compiler:2.38"
+    // hilt
+    // error when use latest hilt version (2.38)
+    implementation "com.google.dagger:hilt-android:2.36"
+    kapt "com.google.dagger:hilt-android-compiler:2.36"
 
     //by viewModels di Activity dan Fragment
     implementation "androidx.activity:activity-ktx:1.4.0"

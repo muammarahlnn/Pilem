@@ -6,14 +6,18 @@ import com.ardnn.pilem.core.data.source.local.room.PilemDao
 import com.ardnn.pilem.core.data.source.local.room.PilemDatabase
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 class DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(context: Context): PilemDatabase =
+    fun provideDatabase(@ApplicationContext context: Context): PilemDatabase =
         Room.databaseBuilder(
             context,
             PilemDatabase::class.java,

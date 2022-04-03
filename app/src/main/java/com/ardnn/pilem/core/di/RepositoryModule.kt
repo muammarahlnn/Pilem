@@ -4,8 +4,11 @@ import com.ardnn.pilem.core.data.PilemRepositoryImpl
 import com.ardnn.pilem.core.domain.repository.PilemRepository
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-@Module(includes = [NetworkModule::class,DatabaseModule::class])
+@Module
+@InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
     @Binds
