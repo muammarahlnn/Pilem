@@ -10,6 +10,7 @@ import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
@@ -31,7 +32,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                 }
             }, { error ->
                 resultData.onNext(ApiResponse.Error(error.message.toString()))
-                Log.e("RemoteDataSource", error.toString())
+                Timber.e(error.toString())
             })
 
         return resultData.toFlowable(BackpressureStrategy.BUFFER)

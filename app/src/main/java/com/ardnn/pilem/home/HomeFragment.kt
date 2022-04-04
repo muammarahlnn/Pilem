@@ -12,6 +12,7 @@ import com.ardnn.pilem.R
 import com.ardnn.pilem.core.data.Resource
 import com.ardnn.pilem.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -66,6 +67,8 @@ class HomeFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             binding?.progressBar?.visibility = View.GONE
+
+                            Timber.d(movies.message.toString())
                             Toast.makeText(context, "Oops something went wrong.", Toast.LENGTH_SHORT).show()
                         }
                     }
