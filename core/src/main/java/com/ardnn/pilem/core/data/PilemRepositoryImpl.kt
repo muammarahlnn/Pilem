@@ -22,7 +22,7 @@ class PilemRepositoryImpl @Inject constructor(
 ) : PilemRepository {
 
     override fun getMovies(): Flowable<Resource<List<Movie>>> {
-        return object : NetworkBoundResource<List<Movie>, List<MovieResponse>>(appExecutors) {
+        return object : com.ardnn.pilem.core.data.NetworkBoundResource<List<Movie>, List<MovieResponse>>(appExecutors) {
             override fun loadFromDb(): Flowable<List<Movie>> {
                 return localDataSource.getMovies().map {
                     DataMapper.mapEntitiesToDomain(it)

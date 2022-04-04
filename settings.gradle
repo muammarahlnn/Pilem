@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Pilem"
 include ':app'
+include ':core'

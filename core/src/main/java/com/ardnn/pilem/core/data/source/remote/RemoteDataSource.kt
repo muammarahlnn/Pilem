@@ -1,7 +1,7 @@
 package com.ardnn.pilem.core.data.source.remote
 
 import android.util.Log
-import com.ardnn.pilem.BuildConfig
+import com.ardnn.pilem.core.BuildConfig
 import com.ardnn.pilem.core.data.source.remote.network.ApiResponse
 import com.ardnn.pilem.core.data.source.remote.network.ApiService
 import com.ardnn.pilem.core.data.source.remote.response.MovieResponse

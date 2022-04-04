@@ -2,8 +2,8 @@ package com.ardnn.pilem.core.util
 
 import android.content.Context
 import android.widget.ImageView
-import com.ardnn.pilem.BuildConfig
-import com.ardnn.pilem.R
+import com.ardnn.pilem.core.BuildConfig
+import com.ardnn.pilem.core.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
@@ -30,9 +30,6 @@ object Helper {
 
     fun setTextString(text: String): String =
         if (text.isEmpty()) "-" else text
-
-    fun setTextNum(num: Int): String =
-        if (num == 0) "-" else num.toString()
 
     fun setTextFloat(num: Float): String =
         if (num == 0f) "-" else num.toString()

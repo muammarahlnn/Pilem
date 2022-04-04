@@ -1,6 +1,6 @@
 package com.ardnn.pilem.core.di
 
-import com.ardnn.pilem.BuildConfig
+import com.ardnn.pilem.core.BuildConfig
 import com.ardnn.pilem.core.data.source.remote.network.ApiService
 import dagger.Module
 import dagger.Provides
