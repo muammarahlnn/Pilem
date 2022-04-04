@@ -59,14 +59,14 @@ class HomeFragment : Fragment() {
                 if (movies != null) {
                     when (movies) {
                         is Resource.Loading -> {
-                            binding?.progressBar?.visibility = View.VISIBLE
+                            showProgressBar(true)
                         }
                         is Resource.Success -> {
-                            binding?.progressBar?.visibility = View.GONE
+                            showProgressBar(false)
                             adapter.setData(movies.data)
                         }
                         is Resource.Error -> {
-                            binding?.progressBar?.visibility = View.GONE
+                            showProgressBar(false)
 
                             Timber.d(movies.message.toString())
                             Toast.makeText(context, "Oops something went wrong.", Toast.LENGTH_SHORT).show()
@@ -107,5 +107,9 @@ class HomeFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
