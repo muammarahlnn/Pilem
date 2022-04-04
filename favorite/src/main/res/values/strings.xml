@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="favorite_movies_empty_message">You haven\'t favorited any movies yet</string>
+</resources>

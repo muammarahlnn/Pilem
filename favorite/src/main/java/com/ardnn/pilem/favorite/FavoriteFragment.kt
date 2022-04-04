@@ -66,6 +66,11 @@ class FavoriteFragment : Fragment() {
 
             viewModel.favoriteMovies.observe(viewLifecycleOwner, { favoriteMovies ->
                 adapter.setData(favoriteMovies)
+
+                // show view empty if favorite movies is empty
+                binding?.viewEmpty?.root?.visibility =
+                    if (favoriteMovies.isEmpty()) View.VISIBLE
+                    else View.GONE
             })
 
             with(binding?.rvMovie) {
@@ -85,5 +90,4 @@ class FavoriteFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }
