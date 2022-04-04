@@ -22,6 +22,8 @@ android {
         buildConfigField("String", "API_KEY", '"ddd13ad36a890e5208e5bad8ac1cc614"')
         buildConfigField("String", "BASE_URL_TMDB", '"https://api.themoviedb.org/"')
         buildConfigField("String", "IMG_URL_TMDB", '"https://image.tmdb.org/t/p/"')
+        buildConfigField("String", "HOSTNAME_TMDB", '"api.themoviedb.org"')
+        buildConfigField("String", "PASSWORD_DB", '"password_teramat_sangat_rahasia"')
     }
 
     buildTypes {
@@ -61,4 +63,8 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
     implementation "androidx.room:room-rxjava2:2.4.2"
     api "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.4.1"
+
+    // encryption
+    implementation "net.zetetic:android-database-sqlcipher:4.4.0"
+    implementation "androidx.sqlite:sqlite-ktx:2.2.0"
 }
