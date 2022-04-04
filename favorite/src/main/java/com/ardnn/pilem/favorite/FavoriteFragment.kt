@@ -73,6 +73,11 @@ class FavoriteFragment : Fragment() {
                 this?.setHasFixedSize(true)
                 this?.adapter = adapter
             }
+
+            // if button back clicked
+            binding?.toolbar?.btnBack?.setOnClickListener {
+                requireActivity().onBackPressed()
+            }
         }
     }
 
