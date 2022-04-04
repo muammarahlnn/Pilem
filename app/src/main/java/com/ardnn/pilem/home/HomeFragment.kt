@@ -80,6 +80,11 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).setSupportActionBar(null)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
