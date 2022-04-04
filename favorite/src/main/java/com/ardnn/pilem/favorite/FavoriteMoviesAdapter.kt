@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ardnn.pilem.core.domain.model.Movie
 import com.ardnn.pilem.core.util.Helper
-import com.ardnn.pilem.databinding.ItemFavoriteBinding
+import com.ardnn.pilem.favorite.databinding.ItemFavoriteBinding
 
 class FavoriteMoviesAdapter : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHolder>() {
 
@@ -20,13 +20,13 @@ class FavoriteMoviesAdapter : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHol
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMoviesAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemFavoriteBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: FavoriteMoviesAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = listData[position]
         holder.onBind(data)
     }

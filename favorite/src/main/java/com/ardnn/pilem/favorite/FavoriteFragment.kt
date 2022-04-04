@@ -1,21 +1,27 @@
 package com.ardnn.pilem.favorite
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ardnn.pilem.R
-import com.ardnn.pilem.databinding.FragmentFavoriteBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.ardnn.pilem.di.FavoriteModuleDependencies
+import com.ardnn.pilem.favorite.databinding.FragmentFavoriteBinding
+import dagger.hilt.android.EntryPointAccessors
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
-    private val viewModel: FavoriteViewModel by viewModels()
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private val viewModel: FavoriteViewModel by viewModels {
+        factory
+    }
 
     private var _binding: FragmentFavoriteBinding? = null
 
@@ -30,6 +36,20 @@ class FavoriteFragment : Fragment() {
         return binding?.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        DaggerFavoriteComponent.builder()
+            .context(requireActivity())
+            .appDependencies(
+                EntryPointAccessors.fromApplication(
+                    requireActivity().applicationContext,
+                    FavoriteModuleDependencies::class.java
+                )
+            )
+            .build()
+            .inject(this)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,8 +57,10 @@ class FavoriteFragment : Fragment() {
             // set favorite movies adapter
             val adapter = FavoriteMoviesAdapter()
             adapter.onItemClick = { selectedData ->
-                val toMovieDetail = FavoriteFragmentDirections
-                    .actionFavoriteFragmentToMovieDetailFragment(selectedData)
+                val toMovieDetail =
+                    FavoriteFragmentDirections.actionFavoriteFragmentToMovieDetailFragment(
+                        selectedData
+                    )
                 findNavController().navigate(toMovieDetail)
             }
 
