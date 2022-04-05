@@ -1,5 +1,6 @@
 package com.ardnn.pilem.core.data
 
+import android.annotation.SuppressLint
 import com.ardnn.pilem.core.data.source.remote.network.ApiResponse
 import com.ardnn.pilem.core.util.AppExecutors
 import io.reactivex.BackpressureStrategy
@@ -10,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 
+@SuppressLint("CheckResult")
 abstract class NetworkBoundResource<ResultType, RequestType>(
     private val executors: AppExecutors
 ) {

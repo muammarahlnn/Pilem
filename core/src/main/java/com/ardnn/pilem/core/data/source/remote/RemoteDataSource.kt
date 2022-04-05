@@ -1,6 +1,6 @@
 package com.ardnn.pilem.core.data.source.remote
 
-import android.util.Log
+import android.annotation.SuppressLint
 import com.ardnn.pilem.core.BuildConfig
 import com.ardnn.pilem.core.data.source.remote.network.ApiResponse
 import com.ardnn.pilem.core.data.source.remote.network.ApiService
@@ -15,6 +15,7 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
+    @SuppressLint("CheckResult")
     fun getMovies(): Flowable<ApiResponse<List<MovieResponse>>> {
         val resultData = PublishSubject.create<ApiResponse<List<MovieResponse>>>()
         val client = apiService.getMovies(BuildConfig.API_KEY)

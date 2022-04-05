@@ -1,5 +1,6 @@
 package com.ardnn.pilem.home
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -17,6 +18,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>(), Filterab
 
     var onItemClick: ((Movie) -> Unit)? = null
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(newListData: List<Movie>?) {
         if (newListData == null) return
         listData.clear()
@@ -83,6 +85,7 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>(), Filterab
                 return filterResults
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constrain: CharSequence?, results: FilterResults?) {
                 listData.clear()
                 listData.addAll(results?.values as List<Movie>)

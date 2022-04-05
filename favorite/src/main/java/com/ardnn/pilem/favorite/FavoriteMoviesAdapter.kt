@@ -1,5 +1,6 @@
 package com.ardnn.pilem.favorite
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ class FavoriteMoviesAdapter : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHol
 
     private var listData = ArrayList<Movie>()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(newListData: List<Movie>?) {
         if (newListData == null) return
         listData.clear()
