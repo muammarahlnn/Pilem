@@ -8,7 +8,7 @@ import io.reactivex.Flowable
 @Dao
 interface PilemDao {
 
-    @Query("SELECT * FROM movie")
+    @Query("SELECT * FROM movie ORDER BY popularity DESC")
     fun getMovies(): Flowable<List<MovieEntity>>
 
     @Query("SELECT * FROM movie where is_favorite = 1")
