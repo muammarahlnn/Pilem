@@ -67,6 +67,7 @@ class HomeFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             showProgressBar(false)
+                            showViewError(true)
 
                             Timber.d(movies.message.toString())
                             Toast.makeText(context, "Oops something went wrong.", Toast.LENGTH_SHORT).show()
@@ -111,5 +112,9 @@ class HomeFragment : Fragment() {
 
     private fun showProgressBar(isLoading: Boolean) {
         binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showViewError(isError: Boolean) {
+        binding?.viewError?.root?.visibility = if (isError) View.VISIBLE else View.GONE
     }
 }

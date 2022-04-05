@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 
 abstract class NetworkBoundResource<ResultType, RequestType>(
     private val executors: AppExecutors
@@ -34,8 +35,6 @@ abstract class NetworkBoundResource<ResultType, RequestType>(
             }
         compositeDisposable.add(db)
     }
-
-    protected open fun onFetchFailed() {}
 
     protected abstract fun loadFromDb(): Flowable<ResultType>
 
@@ -81,6 +80,10 @@ abstract class NetworkBoundResource<ResultType, RequestType>(
                                 dbSource.unsubscribeOn(Schedulers.io())
                                 result.onNext(Resource.Success(it))
                             }
+                    }
+                    is ApiResponse.Error -> {
+                        Timber.e(response.errorMessage)
+                        result.onNext(Resource.Error(response.errorMessage))
                     }
                 }
             }
