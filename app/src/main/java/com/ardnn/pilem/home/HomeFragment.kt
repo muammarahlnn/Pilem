@@ -1,9 +1,12 @@
 package com.ardnn.pilem.home
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -22,6 +25,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
 
     private val binding get() = _binding
+
+    private lateinit var adapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +53,7 @@ class HomeFragment : Fragment() {
             }
 
             // set movies adapter
-            val adapter = MoviesAdapter()
+            adapter = MoviesAdapter()
             adapter.onItemClick = { selectedData ->
                 val toMovieDetail = HomeFragmentDirections
                     .actionHomeFragmentToMovieDetailFragment(selectedData)
@@ -97,6 +102,24 @@ class HomeFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_home, menu)
+
+        // set search view
+        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchView.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                adapter.filter.filter(query)
+                return false
+            }
+
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

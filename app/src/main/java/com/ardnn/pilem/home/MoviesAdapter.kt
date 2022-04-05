@@ -2,23 +2,28 @@ package com.ardnn.pilem.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.ardnn.pilem.core.domain.model.Movie
 import com.ardnn.pilem.core.util.Helper
 import com.ardnn.pilem.databinding.ItemMovieBinding
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>(), Filterable {
 
-    private var listData = ArrayList<Movie>()
+    private val listDataFull = ArrayList<Movie>() // to save all movies
+
+    private val listData = ArrayList<Movie>() // to save current query movies
+
     var onItemClick: ((Movie) -> Unit)? = null
 
     fun setData(newListData: List<Movie>?) {
         if (newListData == null) return
         listData.clear()
         listData.addAll(newListData)
+        listDataFull.addAll(listData)
         notifyDataSetChanged()
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemMovieBinding
@@ -53,6 +58,35 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
                 tvTitle.text = Helper.setTextString(movie.title)
                 tvYear.text = Helper.setTextYear(movie.releaseDate)
                 tvRating.text = Helper.setTextFloat(movie.rating)
+            }
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constrain: CharSequence?): FilterResults {
+                val filteredList = ArrayList<Movie>()
+                if (constrain.isNullOrEmpty()) {
+                    filteredList.addAll(listDataFull)
+                } else {
+                    val query = constrain.toString().trim()
+                    for (movie in listDataFull) {
+                        val title = movie.title
+                        val year = Helper.setTextYear(movie.releaseDate)
+                        if (title.startsWith(query, true) || year.startsWith(query, true)) {
+                            filteredList.add(movie)
+                        }
+                    }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = filteredList
+                return filterResults
+            }
+
+            override fun publishResults(constrain: CharSequence?, results: FilterResults?) {
+                listData.clear()
+                listData.addAll(results?.values as List<Movie>)
+                notifyDataSetChanged()
             }
         }
     }

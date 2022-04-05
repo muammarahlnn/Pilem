@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_yellow"
+        android:title="@string/search_movie"
+        app:showAsAction="collapseActionView|always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+    <item
         android:id="@+id/action_favorite"
         android:icon="@drawable/ic_favorite_true"
         android:title="@string/favorite_movie"
