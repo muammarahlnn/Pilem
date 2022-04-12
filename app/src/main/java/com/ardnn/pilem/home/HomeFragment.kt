@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.ardnn.pilem.R
 import com.ardnn.pilem.core.data.Resource
 import com.ardnn.pilem.databinding.FragmentHomeBinding
@@ -72,7 +71,7 @@ class HomeFragment : Fragment() {
                         }
                         is Resource.Error -> {
                             showProgressBar(false)
-                            showViewError(true)
+                            showViewError()
 
                             Timber.d(movies.message.toString())
                             Toast.makeText(context, "Oops something went wrong.", Toast.LENGTH_SHORT).show()
@@ -82,7 +81,6 @@ class HomeFragment : Fragment() {
             })
 
             with(binding?.rvMovie) {
-                this?.layoutManager = GridLayoutManager(context, 2)
                 this?.setHasFixedSize(true)
                 this?.adapter = adapter
             }
@@ -137,7 +135,7 @@ class HomeFragment : Fragment() {
         binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun showViewError(isError: Boolean) {
-        binding?.viewError?.root?.visibility = if (isError) View.VISIBLE else View.GONE
+    private fun showViewError() {
+        binding?.viewError?.root?.visibility = View.VISIBLE
     }
 }
