@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_primary"
     tools:context=".splash.SplashActivity">
 
     <ImageView
@@ -51,6 +50,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.75" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
