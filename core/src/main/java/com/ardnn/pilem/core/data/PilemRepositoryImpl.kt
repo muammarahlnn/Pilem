@@ -13,6 +13,7 @@ import com.ardnn.pilem.core.util.DataMapper
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -59,10 +60,22 @@ class PilemRepositoryImpl @Inject constructor(
 
             override fun createCall(): Flowable<ApiResponse<List<MovieResponse>>> =
                 when (section) {
-                    0 -> remoteDataSource.getNowPlayingMovies()
-                    1 -> remoteDataSource.getUpcomingMovies()
-                    2 -> remoteDataSource.getPopularMovies()
-                    3 -> remoteDataSource.getTopRatedMovies()
+                    0 -> {
+                        Timber.d("createCall() -> 0")
+                        remoteDataSource.getNowPlayingMovies()
+                    }
+                    1 -> {
+                        Timber.d("createCall() -> 1")
+                        remoteDataSource.getUpcomingMovies()
+                    }
+                    2 -> {
+                        Timber.d("createCall() -> 2")
+                        remoteDataSource.getPopularMovies()
+                    }
+                    3 -> {
+                        Timber.d("createCall() -> 3")
+                        remoteDataSource.getTopRatedMovies()
+                    }
                     else -> remoteDataSource.getNowPlayingMovies() // default
                 }
 
@@ -70,6 +83,7 @@ class PilemRepositoryImpl @Inject constructor(
                 // insert movies
                 when (section) {
                     0 -> {
+                        Timber.d("saveCallResult() -> 0")
                         val movieEntities = DataMapper.mapResponsesToNowPlayingEntities(data)
                         localDataSource.insertNowPlayingMovies(movieEntities)
                             .subscribeOn(Schedulers.io())
@@ -77,6 +91,7 @@ class PilemRepositoryImpl @Inject constructor(
                             .subscribe()
                     }
                     1 -> {
+                        Timber.d("saveCallResult() -> 1")
                         val movieEntities = DataMapper.mapResponsesToUpcomingEntities(data)
                         localDataSource.insertUpcomingMovies(movieEntities)
                             .subscribeOn(Schedulers.io())
@@ -84,6 +99,7 @@ class PilemRepositoryImpl @Inject constructor(
                             .subscribe()
                     }
                     2 -> {
+                        Timber.d("saveCallResult() -> 2")
                         val movieEntities = DataMapper.mapResponsesToPopularEntities(data)
                         localDataSource.insertPopularMovies(movieEntities)
                             .subscribeOn(Schedulers.io())
@@ -91,6 +107,7 @@ class PilemRepositoryImpl @Inject constructor(
                             .subscribe()
                     }
                     3 -> {
+                        Timber.d("saveCallResult() -> 3")
                         val movieEntities = DataMapper.mapResponsesToTopRatedEntities(data)
                         localDataSource.insertTopRatedMovies(movieEntities)
                             .subscribeOn(Schedulers.io())

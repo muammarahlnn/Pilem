@@ -11,14 +11,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(pilemUseCase: PilemUseCase): ViewModel() {
+class HomeViewModel @Inject constructor(private val pilemUseCase: PilemUseCase): ViewModel() {
 
-    private var section = 0
-
-    fun setSection(section: Int) {
-        this.section = section
-    }
-
-    val movies: LiveData<Resource<List<Movie>>> =
+    fun getMovies(section: Int): LiveData<Resource<List<Movie>>> =
         LiveDataReactiveStreams.fromPublisher(pilemUseCase.getMovies(section))
 }

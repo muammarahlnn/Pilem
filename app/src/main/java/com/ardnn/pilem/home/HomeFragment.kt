@@ -61,11 +61,10 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(toMovieDetail)
             }
 
-            // get section and set in on view model
+            // get section and set it to get movies
             section = arguments?.getInt(ARG_SECTION, 0) ?: 0
-            Timber.d(section.toString())
-            viewModel.setSection(section)
-            viewModel.movies.observe(viewLifecycleOwner, { movies ->
+            Timber.d("section -> $section")
+            viewModel.getMovies(section).observe(viewLifecycleOwner, { movies ->
                 if (movies != null) {
                     when (movies) {
                         is Resource.Loading -> {
