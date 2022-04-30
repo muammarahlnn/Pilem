@@ -39,7 +39,7 @@ class HomePagerFragment : Fragment() {
 
             // set pager
             val viewPager = binding?.viewpager as ViewPager2
-            val pagerAdapter = HomePagerAdapter(requireActivity())
+            val pagerAdapter = HomePagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
             viewPager.adapter = pagerAdapter
 
             // set tab layout
