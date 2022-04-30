@@ -45,4 +45,5 @@ dependencies {
     implementation project(":core")
 
     implementation "com.facebook.shimmer:shimmer:0.5.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

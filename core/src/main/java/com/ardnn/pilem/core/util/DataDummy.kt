@@ -1,6 +1,6 @@
 package com.ardnn.pilem.core.util
 
-import com.ardnn.pilem.core.data.source.local.entity.MovieEntity
+import com.ardnn.pilem.core.data.source.local.entity.MovieNowPlayingEntity
 import com.ardnn.pilem.core.data.source.remote.response.MovieResponse
 import com.ardnn.pilem.core.domain.model.Movie
 
@@ -25,10 +25,10 @@ object DataDummy {
         return movies
     }
 
-    fun generateDummyMovieEntities(): List<MovieEntity> {
-        val movies = ArrayList<MovieEntity>()
+    fun generateDummyMovieEntities(): List<MovieNowPlayingEntity> {
+        val movies = ArrayList<MovieNowPlayingEntity>()
         for (i in 1..20) {
-            val movie = MovieEntity(
+            val movie = MovieNowPlayingEntity(
                 0,
                 "",
                 "",

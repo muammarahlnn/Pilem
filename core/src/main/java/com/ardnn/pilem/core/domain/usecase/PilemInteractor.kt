@@ -10,8 +10,8 @@ class PilemInteractor @Inject constructor(
     private val pilemRepository: PilemRepository
 ) : PilemUseCase{
 
-    override fun getMovies(): Flowable<Resource<List<Movie>>> =
-        pilemRepository.getMovies()
+    override fun getMovies(section: Int): Flowable<Resource<List<Movie>>> =
+        pilemRepository.getMovies(section)
 
     override fun getFavoriteMovies(): Flowable<List<Movie>> =
         pilemRepository.getFavoriteMovies()

@@ -3,22 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homePagerFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.ardnn.pilem.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:id="@+id/homePagerFragment"
+        android:name="com.ardnn.pilem.home.HomePagerFragment"
+        android:label="HomePagerFragment">
         <action
-            android:id="@+id/action_homeFragment_to_movieDetailFragment"
+            android:id="@+id/action_homePagerFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_homeFragment_to_favoriteFragment"
+            android:id="@+id/action_homePagerFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"

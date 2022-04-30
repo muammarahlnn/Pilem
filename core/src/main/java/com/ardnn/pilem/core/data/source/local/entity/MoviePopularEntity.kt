@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = "movie")
-data class MovieEntity(
+@Entity(tableName = "movie_popular")
+data class MoviePopularEntity(
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "movie_id")
     val id: Int,
 
     @ColumnInfo(name = "title")

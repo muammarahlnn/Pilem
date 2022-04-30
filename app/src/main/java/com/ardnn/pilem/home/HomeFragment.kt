@@ -27,6 +27,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var adapter: MoviesAdapter
 
+    private var section = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -45,20 +47,24 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            // set action bar
-            (activity as AppCompatActivity).apply {
-                setSupportActionBar(binding?.toolbar?.root)
-                supportActionBar?.setDisplayShowTitleEnabled(false)
-            }
+//            // set action bar
+//            (activity as AppCompatActivity).apply {
+//                setSupportActionBar(binding?.toolbar?.root)
+//                supportActionBar?.setDisplayShowTitleEnabled(false)
+//            }
 
             // set movies adapter
             adapter = MoviesAdapter()
             adapter.onItemClick = { selectedData ->
-                val toMovieDetail = HomeFragmentDirections
-                    .actionHomeFragmentToMovieDetailFragment(selectedData)
+                val toMovieDetail = HomePagerFragmentDirections
+                    .actionHomePagerFragmentToMovieDetailFragment(selectedData)
                 findNavController().navigate(toMovieDetail)
             }
 
+            // get section and set in on view model
+            section = arguments?.getInt(ARG_SECTION, 0) ?: 0
+            Timber.d(section.toString())
+            viewModel.setSection(section)
             viewModel.movies.observe(viewLifecycleOwner, { movies ->
                 if (movies != null) {
                     when (movies) {
@@ -123,8 +129,8 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_favorite -> {
-                val toFavoriteMovies = HomeFragmentDirections
-                    .actionHomeFragmentToFavoriteFragment()
+                val toFavoriteMovies = HomePagerFragmentDirections
+                    .actionHomePagerFragmentToFavoriteFragment()
                 findNavController().navigate(toFavoriteMovies)
             }
         }
@@ -137,5 +143,9 @@ class HomeFragment : Fragment() {
 
     private fun showViewError() {
         binding?.viewError?.root?.visibility = View.VISIBLE
+    }
+
+    companion object {
+        const val ARG_SECTION = "section"
     }
 }

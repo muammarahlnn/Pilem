@@ -6,7 +6,7 @@ import io.reactivex.Flowable
 
 interface PilemUseCase {
 
-    fun getMovies(): Flowable<Resource<List<Movie>>>
+    fun getMovies(section: Int): Flowable<Resource<List<Movie>>>
 
     fun getFavoriteMovies(): Flowable<List<Movie>>
 
