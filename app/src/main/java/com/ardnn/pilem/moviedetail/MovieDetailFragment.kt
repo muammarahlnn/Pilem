@@ -1,12 +1,16 @@
 package com.ardnn.pilem.moviedetail
 
+import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.ardnn.pilem.R
 import com.ardnn.pilem.core.domain.model.Movie
@@ -37,7 +41,13 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            // get movie detail and show it
+            // set action bar
+            (activity as AppCompatActivity).apply {
+                setSupportActionBar(binding?.toolbar)
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            }
+
+            // get movie detail
             val movie = MovieDetailFragmentArgs.fromBundle(arguments as Bundle).movie
             showMovieDetail(movie)
         }
@@ -63,39 +73,40 @@ class MovieDetailFragment : Fragment() {
             )
 
             // set detail
-            tvTitle.text = Helper.setTextString(movie.title)
+//            tvTitle.text = Helper.setTextString(movie.title)
+            collapsingToolbar.title = Helper.setTextString(movie.title)
             tvReleaseDate.text = Helper.setTextDate(movie.releaseDate)
             tvRating.text = Helper.setTextFloat(movie.rating)
             tvSynopsis.text = Helper.setTextString(movie.overview)
 
             // click listeners
             // button back
-            btnBack.setOnClickListener {
-                requireActivity().onBackPressed()
-            }
+//            btnBack.setOnClickListener {
+//                requireActivity().onBackPressed()
+//            }
 
             // button favorite
             var isFavorite = movie.isFavorite
             setButtonFavorite(isFavorite)
-            btnFavorite.setOnClickListener {
-                isFavorite = !isFavorite
-                viewModel.setFavoriteMovie(movie, isFavorite)
-                setButtonFavorite(isFavorite)
-
-                if (isFavorite) {
-                    Toast.makeText(
-                        context,
-                        "${movie.title} has added to favorite movies",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        context,
-                        "${movie.title} has removed from favorite movies",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+//            btnFavorite.setOnClickListener {
+//                isFavorite = !isFavorite
+//                viewModel.setFavoriteMovie(movie, isFavorite)
+//                setButtonFavorite(isFavorite)
+//
+//                if (isFavorite) {
+//                    Toast.makeText(
+//                        context,
+//                        "${movie.title} has added to favorite movies",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                } else {
+//                    Toast.makeText(
+//                        context,
+//                        "${movie.title} has removed from favorite movies",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
 
             // container synopsis
             containerSynopsis.setOnClickListener {
@@ -113,10 +124,10 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun setButtonFavorite(isFavorite: Boolean) {
-        binding?.btnFavorite?.setImageDrawable(
-            if (isFavorite) ContextCompat.getDrawable(requireActivity(), R.drawable.ic_favorite_true)
-            else ContextCompat.getDrawable(requireActivity(), R.drawable.ic_favorite_false)
-        )
+//        binding?.btnFavorite?.setImageDrawable(
+//            if (isFavorite) ContextCompat.getDrawable(requireActivity(), R.drawable.ic_favorite_true)
+//            else ContextCompat.getDrawable(requireActivity(), R.drawable.ic_favorite_false)
+//        )
     }
 
 }
